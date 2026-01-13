@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-void main() => runApp(MaterialApp(home: XiaoYaoHomePage()));
+void main() => runApp(MaterialApp(
+      home: XiaoYaoHomePage(),
+      debugShowCheckedModeBanner: false,
+    ));
 
 class XiaoYaoHomePage extends StatefulWidget {
   @override
@@ -9,7 +12,6 @@ class XiaoYaoHomePage extends StatefulWidget {
 }
 
 class _XiaoYaoHomePageState extends State<XiaoYaoHomePage> {
-  // 这里的 _mainText 是用户自选的主语言，_subText 是我们固定的中文灵魂
   String _mainText = "";
   String _subText = "";
 
@@ -17,7 +19,6 @@ class _XiaoYaoHomePageState extends State<XiaoYaoHomePage> {
   void initState() {
     super.initState();
     _updateDisplay();
-    // 每一分钟自动检查一次时间
     Timer.periodic(Duration(minutes: 1), (timer) => _updateDisplay());
   }
 
@@ -25,8 +26,8 @@ class _XiaoYaoHomePageState extends State<XiaoYaoHomePage> {
     final hour = DateTime.now().hour;
     setState(() {
       if (hour >= 5 && hour < 11) {
-        _mainText = "Wind at Dawn";  // 主语言（示例为英文）
-        _subText = "长 风 拂 晓";      // 副语言（中文）
+        _mainText = "Wind at Dawn";
+        _subText = "长 风 拂 晓";
       } else if (hour >= 11 && hour < 14) {
         _mainText = "Watching Clouds Rise";
         _subText = "坐 看 云 起";
@@ -43,49 +44,26 @@ class _XiaoYaoHomePageState extends State<XiaoYaoHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
-          // 1. 背景层：调用你刚刚上传的 app001.jpg
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/app001.jpg"), 
-                fit: BoxFit.cover,
-              ),
+          // 这里的图片路径直接指向你刚刚上传的文件夹
+          Positioned.fill(
+            child: Image.asset(
+              "assets/app001.jpg",
+              fit: BoxFit.cover,
             ),
           ),
-          
-          // 2. 文字层：主副双语对照
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // 主语言：大字，显眼
-                Text(
-                  _mainText,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 28,
-                    color: Colors.white.withOpacity(0.9),
-                    fontWeight: FontWeight.w300,
-                    letterSpacing: 2,
-                  ),
-                ),
-                SizedBox(height: 12), // 两行字之间的间距
-                // 副语言：中文，稍小，优雅
-                Text(
-                  _subText,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white.withOpacity(0.6), // 透明度低一点，更显高级
-                    letterSpacing: 6,
-                  ),
-                ),
+                Text(_mainText, textAlign: TextAlign.center, style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w300, letterSpacing: 2)),
+                SizedBox(height: 15),
+                Text(_subText, style: TextStyle(fontSize: 20, color: Colors.white.withOpacity(0.9), letterSpacing: 8)),
               ],
             ),
           ),
-
-          // 3. 底部金色图标（占位逻辑）
           Positioned(
             bottom: 60,
             left: 0,
@@ -93,11 +71,11 @@ class _XiaoYaoHomePageState extends State<XiaoYaoHomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _goldIcon(Icons.auto_awesome), 
+                _goldIcon(Icons.auto_awesome),
                 _goldIcon(Icons.directions_run),
                 _goldIcon(Icons.self_improvement),
-                _goldIcon(Icons.Map),
-                _goldIcon(Icons.WB_sunny),
+                _goldIcon(Icons.map),
+                _goldIcon(Icons.wb_sunny),
                 _goldIcon(Icons.emoji_events),
               ],
             ),
